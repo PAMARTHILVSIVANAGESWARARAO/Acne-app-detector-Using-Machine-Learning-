@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Analytics of Machine</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+    <style>
+        *
+        {
+            font-family: 'Poppins', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            /* Width of the scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e0f7fa;
+            /* Light aqua background */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00bcd4;
+            /* Aqua blue scrollbar */
+            border-radius: 10px;
+            border: 2px solid #e0f7fa;
+            /* Border to blend with track */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #008ba3;
+            /* Darker aqua on hover */
+        }
+        .con
+        {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+
+        }
+        h1
+        {
+            color: #006666;
+            font-weight: bolder;
+            font-size: 500;
+            text-decoration: underline;
+        }
+    </style>
+    <style>
+        /* ... existing styles ... */
+    
+        img {
+            max-width: 80%;
+            height: auto;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+    
+        /* Tablet Portrait (768px and below) */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+                padding: 0 15px;
+            }
+            
+            img {
+                max-width: 90%;
+                margin: 15px 0;
+            }
+        }
+    
+        /* Mobile Portrait (600px and below) */
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+                text-decoration: none;
+            }
+            
+            .con {
+                gap: 15px;
+            }
+            
+            img {
+                max-width: 95%;
+                margin: 10px 0;
+            }
+        }
+    
+        /* Small Mobile Portrait (480px and below) */
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+                line-height: 1.4;
+            }
+            
+            img {
+                max-width: 100%;
+                margin: 8px 0;
+            }
+        }
+    
+        /* Extra Small Mobile Portrait (360px and below) */
+        @media screen and (max-width: 360px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            img {
+                margin: 5px 0;
+            }
+        }
+    
+        /* Desktop Optimization (1024px and above) */
+        @media screen and (min-width: 1024px) {
+            img {
+                max-width: 70%;
+                margin: 25px 0;
+            }
+            
+            .con {
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Report Analytics of  Machine Accuracy</h1> 
+
+    <div class="con">
+
+        <img src="{{ url_for('static', filename='images/graph1.png') }}" alt="Analytics Graph">
+        <img src="{{ url_for('static', filename='images/graph2.png') }}" alt="Analytics Graph">
+    </div>
+
+</body>
+</html>

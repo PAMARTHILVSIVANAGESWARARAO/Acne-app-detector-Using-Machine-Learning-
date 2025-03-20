@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acne Detector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <style>
+        *
+        {
+            font-family: 'Poppins', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            /* Width of the scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e0f7fa;
+            /* Light aqua background */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00bcd4;
+            /* Aqua blue scrollbar */
+            border-radius: 10px;
+            border: 2px solid #e0f7fa;
+            /* Border to blend with track */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #008ba3;
+            /* Darker aqua on hover */
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding-top: 70px;
+            background: #f4f9ff;
+        }
+
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, aqua, white);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px #006666;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .topbar h2 {
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: black !important;
+            font-size: 16px;
+            font-weight: 500;
+            height: 100%;
+            
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: #006666;
+            transform: scale(1.05);
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: none;
+        }
+
+                /* Default Message Styling */
+        .default-message {
+            background: #ffffff;
+            padding: 30px;
+            
+            text-align: left;
+            margin-right: 500px ;
+            width: 100%;
+            transition: all 0.3s ease-in-out;
+
+        }
+
+        
+
+                /* Aqua-Themed Footer */
+                .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, aqua, white);
+            color: #006666;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 -4px 8px rgba(0, 114, 255, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .footer p {
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+        }
+       
+        /* Small Devices (Tablets & Phones) */
+        @media (max-width: 768px) {
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 15px;
+    }
+
+    .topbar h2 {
+        font-size: 18px;
+    }
+
+    .nav {
+        display: none; /* Hide regular navigation */
+    }
+
+    /* Floating Bottom Navigation */
+    .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 20px; /* Raised slightly above bottom */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        background: rgba(0, 188, 212, 0.9); /* Slight transparency */
+        padding: 6px 0; /* Reduce height */
+        justify-content: space-around;
+        border-radius: 15px; /* Soft rounded corners */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Floating effect */
+        z-index: 1050;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .mobile-nav a {
+        flex-grow: 1;
+        text-align: center;
+        padding: 8px;
+        font-size: 14px; /* Reduce font size */
+        font-weight: bold;
+        color: white !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .mobile-nav i {
+        font-size: 20px;
+        margin-bottom: 2px;
+    }
+
+    .mobile-nav a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+    }
+
+    .footer {
+        display: none; /* Hide footer on mobile */
+    }
+}
+.user-guide {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+}
+
+h1 {
+    color: #006666;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    color: #008080;
+    font-size: 1.8rem;
+    margin: 1.2rem 0;
+}
+
+h3 {
+    color: #009999;
+    font-size: 1.4rem;
+    margin: 1rem 0 0.5rem;
+}
+
+.steps-list {
+    counter-reset: step-counter;
+    padding-left: 1.2rem;
+}
+
+.step {
+    background: #e6ffff;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-left: 4px solid #00cccc;
+    border-radius: 4px;
+}
+
+.sub-steps {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.sub-steps li {
+    margin: 0.5rem 0;
+    color: #004d4d;
+}
+
+strong {
+    color: #007777;
+    font-weight: 600;
+}
+
+
+        
+    </style>
+
+    <script>
+        function loadPage(page) {
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('default-message').style.display = 'none';
+            document.getElementById('main-content').src = page;
+        }
+    </script>
+</head>
+<body>
+    <div class="topbar">
+        <h2>Acne Detector </h2>
+        <nav class="nav justify-content-center">
+            <a class="nav-link text-white" onclick="loadPage('/predict')">Predict</a>
+            <a class="nav-link text-white" onclick="loadPage('/reports')">Reports</a>
+            
+            <a class="nav-link text-white" onclick="loadPage('/contact')">Contact us</a>
+        </nav>
+    </div>
+
+    <div class="content">
+        <div id="default-message" class="default-message">
+            
+            <section class="user-guide">
+                <h1>Welcome to the App Guide</h1>
+                
+                <div class="instruction-section">
+                    <h2>Getting Started</h2>
+                    <ol class="steps-list">
+                        <li class="step">
+                            <h3>Prediction Process</h3>
+                            <ul class="sub-steps">
+                                <li>Click the <strong>Predict</strong> button</li>
+                                <li>Upload your image file when prompted</li>
+                                <li>Click the <strong>Predict</strong> button again to get results</li>
+                            </ul>
+                        </li>
+                        
+                        <li class="step">
+                            <h3>Viewing Reports</h3>
+                            <ul class="sub-steps">
+                                <li>Click the <strong>Reports</strong> button</li>
+                                <li>View the accuracy graphs showing image processing results</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+        </div>
+        <iframe id="main-content" class="iframe-container"></iframe>
+    </div>
+
+    <div class="mobile-nav d-md-none">
+        <a class="nav-link" onclick="loadPage('/predict')">
+            <i class="bi bi-bar-chart-fill"></i> <span>Analytics</span>
+        </a>
+        <a class="nav-link" onclick="loadPage('/reports')">
+            <i class="bi bi-file-earmark-bar-graph-fill"></i> <span>Reports</span>
+        </a>
+        <a class="nav-link" onclick="loadPage('/contact')">
+            <i class="bi bi-telephone-fill"></i> <span>Contact</span>
+        </a>
+    </div>
+    
+    
+
+    <div class="footer">
+        <p>&copy; 2025 Sri Vasavi Institue of pharmacetual sciences Tadepalligudem & Sri Vasavi Engneering college Tadepalligudem  .</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <title>Acne Detector</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+            font-family: 'Poppins', sans-serif;
+            background-color: aqua;
+
+        }
+
+        h2 {
+            color: #006666;
+            font-weight: bolder;
+            font-size: larger;
+        }
+
+        p {
+            color: #006666;
+        }
+
+        .con {
+            margin-top: 10%;
+            background-color: white;
+            height: 80%;
+            width: 98%;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
+            border: 2px solid aqua;
+        }
+
+        .input-container {
+            width: 90%;
+            margin-inline: auto;
+        }
+
+        .input-container input[type="file"] {
+            width: 70%;
+
+            border: 3px solid aqua;
+            padding: none;
+            height: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #001F3F;
+            background: transparent;
+            cursor: pointer;
+
+        }
+
+        .input-container input[type="file"]::-webkit-file-upload-button {
+
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #001F3F;
+            background: aqua;
+            cursor: pointer;
+            height: 50px;
+            width: 30%;
+            border: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+
+        .treatment {
+            text-align: left;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e6ffff;
+            border-left: 5px solid #33ffff;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .treatment h3 {
+            color: #00cccc;
+        }
+
+        .treatment ul {
+            padding-left: 20px;
+            list-style-type: square;
+            /* Change bullet points to squares */
+        }
+
+        .treatment ul li {
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            background-color: rgba(0, 255, 255, 0.565);
+
+            color: black;
+            height: 55px;
+            width: 140px;
+
+            padding: 10px 15px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: #00cccc;
+        }
+
+        /* For WebKit browsers (Chrome, Safari) */
+        ::-webkit-scrollbar {
+            width: 10px;
+            /* Width of the scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e0f7fa;
+            /* Light aqua background */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00bcd4;
+            /* Aqua blue scrollbar */
+            border-radius: 10px;
+            border: 2px solid #e0f7fa;
+            /* Border to blend with track */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #008ba3;
+            /* Darker aqua on hover */
+        }
+
+        /* For Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #00bcd4 #e0f7fa;
+        }
+
+
+        #prediction {
+            color: #006666;
+            text-transform: uppercase;
+            font-size: 30px;
+            font-weight: bolder;
+
+
+        }
+        @media screen and (max-width: 768px) {
+    body {
+        margin: 10px;
+    }
+
+    .con {
+        width: 100%;
+        height: 100%;
+        margin-top: 5%;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .input-container {
+        width: 100%;
+    }
+
+    .input-container input[type="file"] {
+        width: 100%;
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .input-container input[type="file"]::-webkit-file-upload-button {
+        width: 40%;
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 100%;
+        height: 50px;
+        font-size: 14px;
+    }
+
+    .treatment {
+        padding: 10px;
+    }
+
+    .treatment h3 {
+        font-size: 16px;
+    }
+
+    .treatment ul {
+        padding-left: 15px;
+    }
+
+    #prediction {
+        font-size: 24px;
+    }
+}
+
+
+
+    </style>
+    <style>
+        /* ... existing styles ... */
+    
+        /* Tablet Portrait (768px and below) */
+        @media screen and (max-width: 768px) {
+            body {
+                margin: 20px;
+            }
+    
+            .con {
+                margin-top: 8%;
+                width: 95%;
+                padding: 15px;
+            }
+    
+            .input-container input[type="file"] {
+                width: 80%;
+                height: 48px;
+            }
+    
+            .input-container input[type="file"]::-webkit-file-upload-button {
+                width: 35%;
+            }
+    
+            .btn {
+                width: 120px;
+                height: 50px;
+            }
+    
+            #prediction {
+                font-size: 26px;
+            }
+        }
+    
+        /* Mobile Portrait (600px and below) */
+        @media screen and (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+    
+            .con {
+                width: 100%;
+                margin-top: 5%;
+                padding: 10px;
+                border-radius: 8px;
+            }
+    
+            .input-container {
+                width: 100%;
+            }
+    
+            .input-container input[type="file"] {
+                width: 100%;
+                font-size: 14px;
+            }
+    
+            .input-container input[type="file"]::-webkit-file-upload-button {
+                width: 40%;
+                font-size: 14px;
+            }
+    
+            .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+    
+            img {
+                max-width: 90%;
+            }
+        }
+    
+        /* Small Mobile Portrait (480px and below) */
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+    
+            #prediction {
+                font-size: 22px;
+            }
+    
+            .treatment h3 {
+                font-size: 18px;
+            }
+    
+            .treatment ul li {
+                font-size: 14px;
+            }
+    
+            .input-container input[type="file"] {
+                height: 45px;
+            }
+    
+            .input-container input[type="file"]::-webkit-file-upload-button {
+                height: 45px;
+            }
+        }
+    
+        /* Extra Small Mobile Portrait (360px and below) */
+        @media screen and (max-width: 360px) {
+            h1 {
+                font-size: 22px;
+            }
+    
+            #prediction {
+                font-size: 20px;
+            }
+    
+            .input-container input[type="file"] {
+                font-size: 12px;
+                height: 42px;
+            }
+    
+            .input-container input[type="file"]::-webkit-file-upload-button {
+                font-size: 12px;
+                width: 45%;
+                height: 42px;
+            }
+    
+            .btn {
+                height: 45px;
+                font-size: 14px;
+            }
+        }
+    
+        /* Desktop Optimization (1024px and above) */
+        @media screen and (min-width: 1024px) {
+            .con {
+                max-width: 800px;
+                margin: 50px auto;
+            }
+    
+            .input-container {
+                max-width: 70%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="con">
+
+        <h1>Acne Detector</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <div class="input-container">
+
+                <input type="file" name="file" accept="image/*" required>
+                <button type="submit" class="btn">Predict</button>
+
+            </div>
+        </form>
+
+        {% if result %}
+        <h2 id="prediction">Prediction: {{ result }}</h2>
+        <img src="{{ image_url }}" alt="Uploaded Image" width="300" height="300">
+
+        {% if treatment %}
+        <div class="treatment">
+            <h3>Treatment Plan for {{ result }} Acne:</h3>
+
+
+            {% for item in treatment %}
+            {{ item | safe }}
+            {% endfor %}
+
+
+            </ul>
+        </div>
+        {% else %}
+        <p>No treatment plan available.</p>
+        {% endif %}
+        {% endif %}
+
+    </div>
+
+
+</body>
+
+
+</html>
