@@ -2,8 +2,14 @@ services:
   - type: web
     name: acne-detector
     env: python
+    region: oregon
+    plan: free
     buildCommand: |
-      pip install --upgrade pip setuptools==75.8.0 wheel
+      python --version
+      pip install --upgrade pip
+      pip install setuptools==69.5.1 wheel
       pip install -r requirements.txt
-    startCommand: gunicorn app:app
-    pythonVersion: 3.10
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.13
