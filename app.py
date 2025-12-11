@@ -64,6 +64,38 @@ treatment_plans = {
         </ul>
     """],
 
+    "Moderate Severe": ["""
+        <h2>Dermatologist-Recommended Treatments</h2>
+        <h3>Topical Medications:</h3>
+        <ul>
+            <li><strong>Combination Therapy:</strong> Retinoid + Benzoyl Peroxide + Topical Antibiotic</li>
+            <li><strong>Benzoyl Peroxide 5%-10%</strong></li>
+            <li><strong>Topical Antibiotics:</strong> Clindamycin 1%, Erythromycin 2%</li>
+        </ul>
+        
+        <h3>Oral Medications:</h3>
+        <ul>
+            <li><strong>Oral Antibiotics (Required):</strong> Doxycycline 100mg, Minocycline 100mg daily</li>
+            <li><strong>Hormonal Therapy:</strong> Spironolactone 100-150 mg/day, Oral Contraceptives</li>
+            <li><strong>Consider Isotretinoin</strong> if no improvement in 3-4 months</li>
+        </ul>
+        
+        <h3>Procedural Options:</h3>
+        <ul>
+            <li>Chemical Peels (Salicylic, Glycolic)</li>
+            <li>Intralesional Corticosteroid Injections for large lesions</li>
+            <li>LED Light Therapy</li>
+        </ul>
+        
+        <h3>Healthy Preventive Measures:</h3>
+        <ul>
+            <li>Strict adherence to treatment regimen</li>
+            <li>Anti-inflammatory diet</li>
+            <li>Stress management critical</li>
+            <li>Regular dermatologist follow-up</li>
+        </ul>
+    """],
+
     "Severe": ["""
         <h2>Dermatologist-Recommended Treatments</h2>
         <h3>Primary Treatment:</h3>
@@ -162,7 +194,7 @@ def upload_file():
         # Get predicted class
         predicted_class = np.argmax(pred, axis=1)[0]
         result = class_labels[predicted_class]
-        treatment = treatment_plans[result]  # Get treatment plan
+        treatment = treatment_plans.get(result, treatment_plans["Moderate"])  # Fallback to Moderate if key not found
 
         return render_template('index.html', result=result, treatment=treatment, image_url=filepath)
     
