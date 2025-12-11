@@ -168,8 +168,8 @@ def upload_file():
     
     return render_template('index.html', result=None, treatment=None, image_url=None)
 
-if __name__ == '__main__':
-    print("\n=== Server Startup Checks ===")
-    print(f"TensorFlow Version: {tf.__version__}")
-    print(f"Python Version: {os.sys.version}")
-    app.run(debug=False, host='0.0.0.0', port=5000)
+# if __name__ == '__main__':
+#     print("\n=== Server Startup Checks ===")
+#     print(f"TensorFlow Version: {tf.__version__}")
+#     print(f"Python Version: {os.sys.version}")
+#     app.run(debug=False, host='0.0.0.0', port=5000)
