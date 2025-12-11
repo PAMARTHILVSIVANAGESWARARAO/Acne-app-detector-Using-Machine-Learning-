@@ -2,6 +2,6 @@ services:
   - type: web
     name: acne-detector
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install setuptools==75.8.0 && pip install -r requirements.txt
     startCommand: gunicorn app:app
     pythonVersion: 3.13
